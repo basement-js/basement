@@ -1,0 +1,15 @@
+{
+  "name": "basement",
+  "version": "0.0.1",
+  "description": "Yada yada",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.rubensrv.nl:Basement/Basement.git"
+  },
+  "author": "Cyberuben & Alexrsagen",
+  "license": "GPL-2.0"
+}
