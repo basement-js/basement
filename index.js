@@ -1,9 +1,20 @@
 "use strict";
 
+// require Node.js modules
+var path		= require("path");
+
 // require npm modules
-var restify = require("restify");
-var socketio = require("socket.io");
-var bunyan = require("bunyan");
+var restify		= require("restify");
+var socketio	= require("socket.io");
+var bunyan		= require("bunyan");
+var config		= require("nconf");
+
+// set up config helper
+config.argv()
+.env()
+.file({
+	file: path.resolve("config.json")
+});
 
 // set up http services
 var server = restify.createServer();
@@ -18,10 +29,13 @@ server.on("after", restify.auditLogger({
 }));
 
 // restify routing
-require("./routes")(server);
+require("./routes")({
+	server: server,
+	config: config
+});
 
 // helper to start up the http server
-server.listen(process.env.PORT || 3000, function () {
+server.listen(config.get("port") || 3000, function () {
 	console.log("Server running at %s", server.url);
 });
 
