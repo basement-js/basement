@@ -1,13 +1,17 @@
 "use strict";
 
 // require Node.js modules
-var path		= require("path");
+var path			= require("path");
 
 // require npm modules
-var restify		= require("restify");
-var socketio	= require("socket.io");
-var bunyan		= require("bunyan");
-var config		= require("nconf");
+var restify			= require("restify");
+var socketio		= require("socket.io");
+var bunyan			= require("bunyan");
+var config			= require("nconf");
+
+// require basement libraries
+var HookInstance	= require("./lib/hook");
+var hook			= new HookInstance();
 
 // set up config helper
 config.argv()
@@ -31,7 +35,8 @@ server.on("after", restify.auditLogger({
 // restify routing
 require("./routes")({
 	server: server,
-	config: config
+	config: config,
+	hook: hook
 });
 
 // helper to start up the http server

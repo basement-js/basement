@@ -9,6 +9,6 @@ module.exports = function (vars) {
 
 	// helper to require all routes specified in the array
 	routes.forEach(function (route) {
-		require(path.join(".", route + ".js"))(vars);
+		require(path.resolve(path.join("routes", route + ".js")))(vars);
 	});
 }
