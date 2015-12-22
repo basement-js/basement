@@ -1,47 +1,41 @@
 "use strict";
 
-// require Node.js modules
-var path			= require("path");
+// TODO: optionally use knex instance or socket.io instance or server passed to this function
+module.exports = function () {
+	// require Node.js modules
+	var path					= require("path");
 
-// require npm modules
-var restify			= require("restify");
-var socketio		= require("socket.io");
-var bunyan			= require("bunyan");
-var config			= require("nconf");
+	// require npm modules
+	var restify					= require("restify");
+	var socketio				= require("socket.io");
+	var bunyan					= require("bunyan");
+	var config = this.config	= require("nconf");
 
-// require basement libraries
-var HookInstance	= require("./lib/hook");
-var hook			= new HookInstance();
+	// require basement libraries
+	var HookInstance			= require("./lib/hook");
+	var hook = this.hook		= new HookInstance();
 
-// set up config helper
-config.argv()
-.env()
-.file({
-	file: path.resolve("config.json")
-});
+	// set up config helper
+	config.argv()
+	.env()
+	.file({
+		file: path.resolve("config.json")
+	});
 
-// set up http services
-var server = restify.createServer();
-var io = socketio.listen(server);
+	// set up http services
+	var server = this.server = restify.createServer();
+	var io = this.io = socketio.listen(server);
 
-// bunyan logging for restify
-server.on("after", restify.auditLogger({
-	log: bunyan.createLogger({
-		name: "audit",
-		stream: process.stdout
-	})
-}));
+	// bunyan logging for restify
+	server.on("after", restify.auditLogger({
+		log: bunyan.createLogger({
+			name: "audit",
+			stream: process.stdout
+		})
+	}));
 
-// restify routing
-require("./routes")({
-	server: server,
-	config: config,
-	hook: hook
-});
+	// restify routing
+	require("./routes").call(this);
 
-// helper to start up the http server
-server.listen(config.get("port") || 3000, function () {
-	console.log("Server running at %s", server.url);
-});
-
-module.exports = exports = server;
+	return this;
+}

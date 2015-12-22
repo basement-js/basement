@@ -1,6 +1,6 @@
-module.exports = function (vars) {
-	// shorthand for vars.server
-	var server = vars.server;
+module.exports = function () {
+	// shorthand for this.server
+	var server = this.server;
 	var transports = ["local", "oauth1", "oauth2"];
 
 	server.get("/api/login/transports", function (req, res, next) {
@@ -16,7 +16,7 @@ module.exports = function (vars) {
 			res.send("POST to login using transport " + req.params.transport);
 		} else {
 			res.send({
-				code: "TransportInvalid"
+				code: "TransportInvalid",
 				message: "Invalid transport."
 			});
 		}
