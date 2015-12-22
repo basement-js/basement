@@ -12,6 +12,10 @@ var config			= require("nconf");
 // require basement libraries
 var HookInstance	= require("./lib/hook");
 var hook			= new HookInstance();
+var PluginInstance 	= require("./lib/plugin");
+var plugin			= new PluginInstance(config);
+
+plugin.get("2fa");
 
 // set up config helper
 config.argv()
