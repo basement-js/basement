@@ -1,0 +1,10 @@
+var Basement = require("../index.js");
+var basement = new Basement();
+var server = basement.server;
+var config = basement.config;
+
+server.listen(config.get("port") || 3000, function() {
+	console.log("Basement running at %s", server.url);
+});
+
+module.exports = basement;
