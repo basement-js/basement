@@ -1,9 +1,9 @@
 module.exports = {
-	getInfo: function() {
-		return {
-			name: "authy",
-			prettyName: "Authy",
-			version: "1.0.0"
-		}
-	}
+    getInfo: function() {
+        return {
+            name: "authy",
+            prettyName: "Authy",
+            version: "1.0.0"
+        }
+    }
 }
