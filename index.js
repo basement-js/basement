@@ -14,8 +14,8 @@ module.exports = function () {
     // require basement libraries
     var HookInstance            = require("./lib/hook");
     var hook = this.hook        = new HookInstance();
-    var PluginInstance          = require("./lib/plugin");
-    var plugin = this.plugin    = new PluginInstance(this);
+    var PluginManager           = require("./lib/plugin");
+    var plugin = this.plugin    = new PluginManager(this);
 
     // set up config helper
     config.argv()
