@@ -1,7 +1,7 @@
 "use strict";
 
 // TODO: optionally use knex instance or socket.io instance or server passed to this function
-module.exports = function () {
+module.exports = function Basement() {
     // require Node.js modules
     var path                    = require("path");
 
@@ -16,6 +16,8 @@ module.exports = function () {
     var hook = this.hook        = new HookInstance();
     var PluginManager           = require("./lib/plugin");
     var plugin = this.plugin    = new PluginManager(this);
+    var Log                     = require("./lib/log");
+    var log = this.log          = new Log(this);
 
     // set up config helper
     config.argv()
