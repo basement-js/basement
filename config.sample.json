@@ -11,7 +11,7 @@
         "client": "mysql",
         "connection": {
             "host": "your_ip_here",
-            "database": "your_dp_here",
+            "database": "your_db_here",
             "user": "your_user_here",
             "password": "your_password_here"
         }
