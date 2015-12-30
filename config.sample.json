@@ -1,3 +1,19 @@
 {
-    "port": 3000
+    // optional, defaults to 3000
+    "port": 3000,
+    // optional, defaults to the "plugins" directory
+    "pluginmanager": {
+        "plugindir": ""
+    },
+    // required for database to load
+    // refer to http://knexjs.org/#Installation-client for configuration options
+    "knex": {
+        "client": "mysql",
+        "connection": {
+            "host": "your_ip_here",
+            "database": "your_dp_here",
+            "user": "your_user_here",
+            "password": "your_password_here"
+        }
+    }
 }
