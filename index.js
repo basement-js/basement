@@ -10,21 +10,28 @@ module.exports = function Basement() {
     var socketio                = require("socket.io");
     var bunyan                  = require("bunyan");
     var config = this.config    = require("nconf");
-
-    // require basement libraries
-    var HookInstance            = require("./lib/hook");
-    var hook = this.hook        = new HookInstance();
-    var PluginManager           = require("./lib/plugin");
-    var plugin = this.plugin    = new PluginManager(this);
-    var Log                     = require("./lib/log");
-    var log = this.log          = new Log(this);
-
-    // set up config helper
+   
+    // set up config
     config.argv()
     .env()
     .file({
         file: path.resolve("config.json")
     });
+
+    // require hook library
+    var HookCollection          = require("./lib/hook");
+    var hook = this.hook        = new HookCollection();
+    
+    // require plugin manager
+    var PluginManager           = require("./lib/plugin");
+    var plugin = this.plugin    = new PluginManager(this);
+
+    // require log library
+    var Log                     = require("./lib/log");
+    var log = this.log          = new Log(this);
+
+    // require database loader
+    require("./lib/database").call(this);
 
     // set up http services
     var server = this.server = restify.createServer();
