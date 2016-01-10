@@ -9,9 +9,12 @@ function Basement() {
     var restify     = require("restify");
     var socket      = require("socket.io");
     var bunyan      = require("bunyan");
-
+    
     var config      = require("nconf");
     this.config     = config;
+    
+    var passport    = require("passport");
+    this.passport   = passport;
    
     // set up config
     config.argv()
@@ -28,7 +31,7 @@ function Basement() {
     // require plugin manager
     var PluginManager   = require("./lib/plugin");
     var plugin          = new PluginManager(this);
-    this.plugin         plugin;
+    this.plugin         = plugin;
 
     // require log library
     var Log     = require("./lib/log");
