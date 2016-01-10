@@ -2,7 +2,7 @@
     // optional, defaults to 3000
     "port": 3000,
     // optional, defaults to the "plugins" directory
-    "pluginmanager": {
+    "plugin": {
         "plugindir": ""
     },
     // required for database to load
