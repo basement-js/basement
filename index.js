@@ -30,6 +30,10 @@ module.exports = function Basement() {
     var Log                     = require("./lib/log");
     var log = this.log          = new Log(this);
 
+    // require language library
+    var Language                = require("./lib/lang");
+    var lang = this.lang        = new Language(this);
+
     // require database loader
     require("./lib/database").call(this);
 

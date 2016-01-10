@@ -5,6 +5,9 @@
     "pluginmanager": {
         "plugindir": ""
     },
+    "language": {
+
+    },
     // required for database to load
     // refer to http://knexjs.org/#Installation-client for configuration options
     "knex": {
