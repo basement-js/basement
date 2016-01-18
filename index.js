@@ -3,13 +3,18 @@
 // TODO: optionally use knex instance or socket.io instance or server passed to this function
 module.exports = function Basement() {
     // require Node.js modules
-    var path                    = require("path");
+    var path        = require("path");
 
     // require npm modules
-    var restify                 = require("restify");
-    var socketio                = require("socket.io");
-    var bunyan                  = require("bunyan");
-    var config = this.config    = require("nconf");
+    var restify     = require("restify");
+    var socketio    = require("socket.io");
+    var bunyan      = require("bunyan");
+
+    var config      = require("nconf");
+    this.config     = config;
+
+    var passport    = require("passport");
+    this.passport   = passport;
    
     // set up config
     config.argv()
@@ -19,23 +24,29 @@ module.exports = function Basement() {
     });
 
     // require hook library
-    var HookCollection          = require("./lib/hook");
-    var hook = this.hook        = new HookCollection();
+    var HookCollection  = require("./lib/hook");
+    var hook            = new HookCollection();
+    this.hook           = hook;
     
     // require plugin manager
-    var PluginManager           = require("./lib/plugin");
-    var plugin = this.plugin    = new PluginManager(this);
+    var PluginManager   = require("./lib/plugin");
+    var plugin          = new PluginManager(this);
+    this.plugin         = plugin;
 
     // require log library
-    var Log                     = require("./lib/log");
-    var log = this.log          = new Log(this);
+    var Log     = require("./lib/log");
+    var log     = new Log(this);
+    this.log    = log;
 
     // require database loader
     require("./lib/database").call(this);
 
     // set up http services
-    var server = this.server = restify.createServer();
-    var io = this.io = socketio.listen(server);
+    var server  = restify.createServer();
+    this.server = server;
+
+    var io  = socketio.listen(server);
+    this.io = io;
 
     // bunyan logging for restify
     server.on("after", restify.auditLogger({
