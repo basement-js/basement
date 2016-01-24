@@ -13,7 +13,7 @@ module.exports = function Basement() {
     var config      = require("nconf");
     this.config     = config;
 
-    var passport    = require("passport");
+    var passport    = require("passport-restify");
     this.passport   = passport;
    
     // set up config
@@ -40,6 +40,23 @@ module.exports = function Basement() {
 
     // require database loader
     require("./lib/database").call(this);
+
+    // TODO: move to /lib/user/login.js
+    // set up passport
+    passport.serializeUser(function (user, done) {
+        done(null, user.id);
+    });
+
+    var User = this.bookshelf.model("User");
+    passport.deserializeUser(function (id, done) {
+        return new User({id: id})
+        .then(function (user) {
+            return done(user.toJSON());
+        })
+        .catch(function (err) {
+            return done(err, null);
+        });
+    });
 
     // set up http services
     var server  = restify.createServer();
